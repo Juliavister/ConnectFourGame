@@ -20,20 +20,16 @@ def create_board():
     board = np.zeros((ROW_count, COLUMN_count))
     return board
 
-
 def drop_piece(board, row, col, piece):
     board[row][col] = piece
 
-
 def is_location_valid(board, col):
     return board[ROW_count-1][col] == 0
-
 
 def get_next_free_row(board, col):
     for r in range(ROW_count):
         if board[r][col] == 0:
             return r
-
 
 def print_board(board):
     print(np.flip(board, 0))
