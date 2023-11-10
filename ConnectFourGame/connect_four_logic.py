@@ -66,7 +66,7 @@ def winning_move(board, piece):
 
 
 def is_terminal_node(board):
-    return winning_move(board, PlayerPiece) or winning_move(board, AIpiece) or len(is_location_valid(board)) == 0
+    return winning_move(board, PlayerPiece) or winning_move(board, AIpiece) or len(get_valid_location(board)) == 0
 
 
 def evaluate_window(window, piece):
@@ -132,6 +132,21 @@ def get_valid_location(board):
     return valid_locations
 
 
+def pick_best_move(board, piece):
+	valid_locations = get_valid_location(board)
+	best_score = -10000
+	best_col = random.choice(valid_locations)
+	for col in valid_locations:
+		row = get_next_free_row(board, col)
+		temp_board = board.copy()
+		drop_piece(temp_board, row, col, piece)
+		score = score_position(temp_board, piece)
+		if score > best_score:
+			best_score = score
+			best_col = col
+
+	return best_col
+
 
 def MiniMax(board, depth, alpha, beta, maximizing_player):
     valid_locations = get_valid_location(board)
@@ -188,4 +203,4 @@ def MiniMax(board, depth, alpha, beta, maximizing_player):
 
 board = create_board()
 game_over = False
-turn = random.randint(PlayerPiece, AIpiece)
+turn = random.randint(PlayerPiece, AIpiece) 
